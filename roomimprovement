@@ -1,0 +1,107 @@
+/*
+	Withheld's and veronica's
+	    "Room Improvement Script"
+		  Control Panel 
+			
+	Please do not remove this notice.
+				Thank you!
+			Withheld & veronica
+
+=========================================================
+                    Features List
+=========================================================
+- AvSwitch:  This removes the floating avatar changer into an "Avatar" link where "From" was listed.  You can hover over the link to see your current avatar, click to change it.
+
+- SendButton:  A little improvement on the "Talk/Listen" button.  Now you can see who you're sending to, as a little reminder before you hit the button!  It retains the name, even, after you send, or when you choose from the dropdown list or manually type in the name.
+
+- RemoveUndo:  Finally, remove that pesky Undo link!  The downfall of nearly everybody at least once, now you don't have to worry!
+
+- hiThere: Put in a nice little message welcoming the
+viewer by name.
+
+- fakeEditor: By popular demand, inserts an unobtrusive editor Menu so you can add images, links, simple HTML formatting, room links, and a preview function so you can see what your post looks like before you submit it!
+
+- fixedImgSize: Make posted images a max width, so it doesn't blow out your room.
+
+- dropDownFav: Your favorite links in a dropdown instead of a lengthy list of favorites!
+
+- trueMulti: This is for multi-location rooms that veronica{Withheld} has designed.  It will not work with the general multiloc script.
+
+- alternateWhisper: This is to turn on/off the alternate whisper styling.
+
+=========================================================
+                 Turn ON/Off Features
+=========================================================
+If you want a feature turned on, change the 0 to a 1.
+If you want the feature turned off, change the 1 to a 0.
+*/
+TurnOn_AvSwitch=1;
+TurnOn_SendButton=1;
+TurnOn_RemoveUndo=1;
+TurnOn_hiThere=1;
+TurnOn_fakeEditor=1;
+TurnOn_fixedImgSize=1;
+TurnOn_dropDownFav=1;
+TurnOn_trueMulti=0;
+TurnOn_alternateWhisper=1;
+
+/*
+=========================================================
+                 Change-able Things
+=========================================================
+Here is where you can change the Text for the various features that have the option for it.
+
+    [ Send Button Text ]
+    You can change the send button text here.
+    Example: sendToBtn = "Send To"
+ ...will show: "Send To Withheld" on the send button.
+*/
+      sendToBtn = "Send To";
+
+
+/*
+    [ Hello Text ]
+    Example: helloMsg1 = "Hello, ";
+             helloMsg2 = ". Please enjoy your stay!";
+
+ ...will show: "Hello, Withheld. Please enjoy your stay!" */
+      helloMsg1 = "Hello, ";
+      helloMsg2 = " and welcome!";
+
+
+/*
+    [ Avatar Link Text ]
+    Example: avatarLink = "Avatars";
+ ...will show: "Avis" where the "From" text goes.
+*/
+      avatarLink = "Avis";
+
+
+/*
+    [ Restrict Image Width ]
+    Example: imageMaxWidth = "400";
+ ...will show images at a 400px max width.  The default is 400px.
+*/
+      imageMaxWidth = "500";
+
+
+/*
+    [ Editor Options ]
+    Here you can turn on the image Bar, and make the editor buttons show all the time.
+*/
+      TurnOn_AlwaysShowEditor=0;
+      TurnOn_imageBar=0;
+
+/*
+=========================================================
+   Make sure you've got the roomImprovement.js script in your Room Controls in the "Text For Bottom of Room" section:
+
+<script src="https://soiroom.hyperchat.com/codeexam/scripts/roomImprovement.js"></script>
+=========================================================
+             That's it.  You should be done!
+=========================================================
+*/
+=========================================================
+             That's it.  You should be done!
+=========================================================
+*/
