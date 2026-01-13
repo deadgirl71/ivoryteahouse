@@ -1,0 +1,81 @@
+<script>
+// Multi-room config for Ivory Tea House
+
+var multiConfig = {
+    "THISROOM": "ivorytea",
+    "locationColor": "#e8d8b0",
+    "locationBackground": "#1a0f0f",
+    "currentView": "",
+    "viewList": ["ivorytea", "silkhall", "petalgarden", "moonbath", "redkimono", "teaceremony", "mirrorroom"],
+    "defaultView": "ivorytea"
+};
+
+var roomstuff = {
+    "rooms": {
+
+        "ivorytea": {
+            "rName": "Ivory Tea House",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/ivoryteahousemainback.jpg",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #e8d8b0; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-IVORY-TOP-IMAGE-HERE'><br><i>The Ivory Tea House</i><br></center>",
+            "roombottom": ""
+        },
+
+        "silkhall": {
+            "rName": "Silk Hallway",
+            "backgroundImage": "YOUR-SILK-HALLWAY-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-SILK-HALLWAY-TOP-IMAGE'><br><i>The Silk Hallway</i><br></center>",
+            "roombottom": ""
+        },
+
+        "petalgarden": {
+            "rName": "Petal Garden",
+            "backgroundImage": "YOUR-PETAL-GARDEN-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #f7e6e6; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-PETAL-GARDEN-TOP-IMAGE'><br><i>The Petal Garden</i><br></center>",
+            "roombottom": ""
+        },
+
+        "moonbath": {
+            "rName": "Moon Bath",
+            "backgroundImage": "YOUR-MOON-BATH-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #d0d8ff; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-MOON-BATH-TOP-IMAGE'><br><i>The Moon Bath</i><br></center>",
+            "roombottom": ""
+        },
+
+        "redkimono": {
+            "rName": "Red Kimono Room",
+            "backgroundImage": "YOUR-RED-KIMONO-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #ffdfd6; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-RED-KIMONO-TOP-IMAGE'><br><i>The Red Kimono Room</i><br></center>",
+            "roombottom": ""
+        },
+
+        "teaceremony": {
+            "rName": "Tea Ceremony Chamber",
+            "backgroundImage": "YOUR-TEA-CEREMONY-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-TEA-CEREMONY-TOP-IMAGE'><br><i>The Tea Ceremony</i><br></center>",
+            "roombottom": ""
+        },
+
+        "mirrorroom": {
+            "rName": "Geisha’s Mirror",
+            "backgroundImage": "YOUR-MIRROR-ROOM-BACKGROUND",
+            "chatleft": "",
+            "underchat": "",
+            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-MIRROR-ROOM-TOP-IMAGE'><br><i>The Geisha’s Mirror</i><br></center>",
+            "roombottom": ""
+        }
+
+    }
+};
+</script>
