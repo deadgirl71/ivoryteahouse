@@ -18,62 +18,217 @@ var roomstuff = {
             "backgroundImage": "https://soi-ivorytea.hyperchat.com/ivoryteahousemainback.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #e8d8b0; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-IVORY-TOP-IMAGE-HERE'><br><i>The Ivory Tea House</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>
+body {color: #e8d8b0; font-family: 'Cormorant Garamond', serif;}
+
+/* SCROLL STYLES FOR ALL ROOMS */
+.ivoryScroll {
+    display: inline-block;
+    padding: 20px 30px;
+    background: rgba(255, 245, 225, 0.08);
+    border-left: 2px solid rgba(255, 245, 225, 0.35);
+    border-right: 2px solid rgba(255, 245, 225, 0.35);
+    border-radius: 4px;
+}
+
+.silkScroll {
+    display: inline-block;
+    padding: 22px 32px;
+    background: rgba(255, 240, 200, 0.06);
+    border-left: 2px solid rgba(255, 230, 180, 0.3);
+    border-right: 2px solid rgba(255, 230, 180, 0.3);
+    border-radius: 4px;
+}
+
+.petalScroll {
+    display: inline-block;
+    padding: 22px 34px;
+    background: rgba(255, 220, 230, 0.08);
+    border-top: 2px solid rgba(255, 200, 210, 0.35);
+    border-bottom: 2px solid rgba(255, 200, 210, 0.35);
+    border-radius: 6px;
+}
+
+.moonScroll {
+    display: inline-block;
+    padding: 25px 36px;
+    background: rgba(200, 210, 255, 0.07);
+    border: 1px solid rgba(200, 210, 255, 0.25);
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(200, 210, 255, 0.18);
+}
+
+.kimonoScroll {
+    display: inline-block;
+    padding: 28px 40px;
+    background: rgba(80, 0, 0, 0.25);
+    border-top: 3px solid rgba(255, 200, 180, 0.4);
+    border-bottom: 3px solid rgba(255, 200, 180, 0.4);
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+}
+
+.teaScroll {
+    display: inline-block;
+    padding: 24px 38px;
+    background: rgba(240, 225, 200, 0.08);
+    border-left: 2px solid rgba(240, 225, 200, 0.35);
+    border-right: 2px solid rgba(240, 225, 200, 0.35);
+    border-radius: 4px;
+}
+
+.mirrorScroll {
+    display: inline-block;
+    padding: 26px 36px;
+    background: rgba(255, 245, 240, 0.07);
+    border: 1px solid rgba(255, 235, 225, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(255, 235, 225, 0.15);
+}
+</style>
+
+<center>
+<img class='topImage' src='https://soi-ivorytea.hyperchat.com/TearoomtopUSE.png'><br>
+<i>The Ivory Tea House</i><br>
+</center>
+`,
+            "roombottom": `
+<center><div class='ivoryScroll'>
+Steam curls like a whispered blessing,<br>
+rising from porcelain warmed by gentle hands.<br>
+Here, time slows to the rhythm of breath,<br>
+and the world softens into quiet ceremony.<br>
+This is the chamber of calm beginnings —<br>
+where every sip is a return to yourself.
+</div></center>`
         },
 
         "silkhall": {
             "rName": "Silk Hallway",
-            "backgroundImage": "YOUR-SILK-HALLWAY-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/hallwaybackground.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-SILK-HALLWAY-TOP-IMAGE'><br><i>The Silk Hallway</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/silkhallwayuse.png'><br><i>The Silk Hallway</i><br></center>`,
+            "roombottom": `
+<center><div class='silkScroll'>
+Lanterns glow as we walk,<br>
+our steps softened by silk and shadow.<br>
+Banners whisper above us,<br>
+guiding us toward the next dream.<br>
+This hallway is a breath held between worlds —<br>
+a place where paths meet,<br>
+and the house listens as we pass.
+</div></center>`
         },
 
         "petalgarden": {
             "rName": "Petal Garden",
-            "backgroundImage": "YOUR-PETAL-GARDEN-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/fallingcherryblossoms.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #f7e6e6; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-PETAL-GARDEN-TOP-IMAGE'><br><i>The Petal Garden</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #f7e6e6; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/Petalgardentop.png'><br><i>The Petal Garden</i><br></center>`,
+            "roombottom": `
+<center><div class='petalScroll'>
+Blossoms drift like whispered blessings,<br>
+gathering at your feet as you enter.<br>
+The air is warm with memory,<br>
+sweet with the promise of gentler days.<br>
+Here, petals fall not in sorrow<br>
+but in welcome —<br>
+a soft path leading you deeper<br>
+into the heart of the sanctuary.
+</div></center>`
         },
 
         "moonbath": {
             "rName": "Moon Bath",
-            "backgroundImage": "YOUR-MOON-BATH-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/moonbathback.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #d0d8ff; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-MOON-BATH-TOP-IMAGE'><br><i>The Moon Bath</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #d0d8ff; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/MoonbathtopUSE.png'><br><i>The Moon Bath</i><br></center>`,
+            "roombottom": `
+<center><div class='moonScroll'>
+Moonlight gathers in a quiet pool,<br>
+silver ripples soft as breath.<br>
+Here, the night opens its palms<br>
+and offers you stillness.<br>
+Petals drift across the water’s skin,<br>
+carrying your worries away<br>
+one silent circle at a time.<br>
+This is the place where light becomes touch,<br>
+and the world finally exhales.
+</div></center>`
         },
 
         "redkimono": {
             "rName": "Red Kimono Room",
-            "backgroundImage": "YOUR-RED-KIMONO-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/redkiminobackground.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #ffdfd6; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-RED-KIMONO-TOP-IMAGE'><br><i>The Red Kimono Room</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #ffdfd6; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/redkiminotop.png'><br><i>The Red Kimono Room</i><br></center>`,
+            "roombottom": `
+<center><div class='kimonoScroll'>
+Crimson silk waits in perfect stillness,<br>
+folded with the care of generations.<br>
+Lanterns burn low,<br>
+casting ritual light across the room.<br>
+Here, the kimono is not merely worn —<br>
+it is entered, honored,<br>
+a garment of lineage and intention.<br>
+This is the chamber of preparation,<br>
+where every tie, every fold,<br>
+is a vow whispered into fabric.
+</div></center>`
         },
 
         "teaceremony": {
             "rName": "Tea Ceremony Chamber",
-            "backgroundImage": "YOUR-TEA-CEREMONY-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/teaceramonychamberbackground.jpg",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-TEA-CEREMONY-TOP-IMAGE'><br><i>The Tea Ceremony</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/teaceramonytop.png'><br><i>The Tea Ceremony</i><br></center>`,
+            "roombottom": `
+<center><div class='teaScroll'>
+Within these walls,<br>
+silence becomes a sacred language.<br>
+Water warms, leaves unfurl,<br>
+and the world narrows to a single, mindful moment.<br>
+Here, the ceremony is not performance —<br>
+it is devotion,<br>
+a quiet offering of presence and grace.
+</div></center>`
         },
 
         "mirrorroom": {
             "rName": "Geisha’s Mirror",
-            "backgroundImage": "YOUR-MIRROR-ROOM-BACKGROUND",
+            "backgroundImage": "https://soi-ivorytea.hyperchat.com/geishamirrorbackground.png",
             "chatleft": "",
             "underchat": "",
-            "roomtop": "<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style><center><img class='topImage' src='YOUR-MIRROR-ROOM-TOP-IMAGE'><br><i>The Geisha’s Mirror</i><br></center>",
-            "roombottom": ""
+            "roomtop": `
+<style>body {color: #f4eac2; font-family: 'Cormorant Garamond', serif;}</style>
+<center><img class='topImage' src='https://soi-ivorytea.hyperchat.com/geishamirrortop.png'><br><i>The Geisha’s Mirror</i><br></center>`,
+            "roombottom": `
+<center><div class='mirrorScroll'>
+Before the dance,<br>
+before the gaze,<br>
+she sits in silence.<br>
+Silk brushes skin,<br>
+comb touches memory.<br>
+This is the room of becoming —<br>
+where beauty is prepared,<br>
+and presence is born.
+</div></center>`
         }
 
     }
