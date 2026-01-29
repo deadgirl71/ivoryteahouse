@@ -1,0 +1,662 @@
+/*
+    True Multi-Location Script
+    based on Multi-Location Script originally by Athelon
+    Modified 05May2023 by Withheld
+	
+	Image Locations Removed
+*/
+
+//(function(){
+
+var findForm;
+var editForm;
+
+/*
+     GetElementsByClassName
+
+     Developed by Robert Nyman
+     http://www.robertnyman.com
+*/	
+var getElementsByClassName = function (className, tag, elm){
+  if (document.getElementsByClassName) {
+    getElementsByClassName = function (className, tag, elm) {
+      elm = elm || document;
+      var elements = elm.getElementsByClassName(className),
+      nodeName = (tag)? new RegExp("\\b" + tag + "\\b", "i") : null,
+      returnElements = [],
+      current;
+      for(var i=0, il=elements.length; i<il; i+=1){
+        current = elements[i];
+        if(!nodeName || nodeName.test(current.nodeName)) {
+          returnElements.push(current);
+        }
+      }
+      return returnElements;
+    };
+  }
+  else if (document.evaluate) {
+    getElementsByClassName = function (className, tag, elm) {
+      tag = tag || "*";
+      elm = elm || document;
+      var classes = className.split(" "),
+      classesToCheck = "",
+      xhtmlNamespace = "http://www.w3.org/1999/xhtml",
+      namespaceResolver = (document.documentElement.namespaceURI === xhtmlNamespace)? xhtmlNamespace : null,
+      returnElements = [],
+      elements,
+      node;
+      for(var j=0, jl=classes.length; j<jl; j+=1){
+        classesToCheck += "[contains(concat(' ', @class, ' '), ' " + classes[j] + " ')]";
+      }
+      try	{
+        elements = document.evaluate(".//" + tag + classesToCheck, elm, namespaceResolver, 0, null);
+      }
+      catch (e) {
+        elements = document.evaluate(".//" + tag + classesToCheck, elm, null, 0, null);
+      }
+      while ((node = elements.iterateNext())) {
+        returnElements.push(node);
+      }
+      return returnElements;
+    };
+  }
+  else {
+    getElementsByClassName = function (className, tag, elm) {
+      tag = tag || "*";
+      elm = elm || document;
+      var classes = className.split(" "),
+      classesToCheck = [],
+      elements = (tag === "*" && elm.all)? elm.all : elm.getElementsByTagName(tag),
+      current,
+      returnElements = [],
+      match;
+      for(var k=0, kl=classes.length; k<kl; k+=1){
+        classesToCheck.push(new RegExp("(^|\\s)" + classes[k] + "(\\s|$)"));
+      }
+      for(var l=0, ll=elements.length; l<ll; l+=1){
+        current = elements[l];
+        match = false;
+        for(var m=0, ml=classesToCheck.length; m<ml; m+=1){
+          match = classesToCheck[m].test(current.className);
+          if (!match) {
+            break;
+          }
+        }
+        if (match) {
+          returnElements.push(current);
+        }
+      }
+      return returnElements;
+    };
+  }
+  return getElementsByClassName(className, tag, elm);
+};
+
+
+function getRoomFromClassName(elem) {
+  return elem.className.replace("fakelink", "").replace(/\s/g, "");
+}
+
+function jumpToRoom(elem)
+{
+  var room = getRoomFromClassName(this);
+  findForm.vqxfi.value = room;
+  findForm.submit();
+}
+
+
+// Cram the HTML into a div
+function setDiv(id, room)
+{
+  var elem = $(id);
+  var r = room[id];
+  var spans;
+  var i;
+  
+  var v;
+  
+  // if r is empty or not defined, set v to "", else set it to r.
+  v = (!!r) ? r : "";
+  
+  // Handle room links #r-chatplus@soi(Like this)  
+  v = v.replace(/(#r-)([a-z0-9@]+)(\()(.[^\)]+)(\))?/gim, "<a href='#' class='fakelink $2'>$4</a>");
+  
+  // And then handle room links like this:  #r-chatplus.
+  v = v.replace(/(#r-)([a-z0-9@]+)?/gim, "<a href='#' class='fakelink $2'>#r-$2</a>");
+  
+  // Sometmes an element is hidden -- like the text under the chat box
+  if (!!elem) {
+    elem.innerHTML = v;
+    spans = getElementsByClassName('fakelink', 'a', elem);
+    for (i = spans.length-1; i >= 0; i--) {
+      elem = spans[i];
+      elem.onclick = jumpToRoom;
+      elem.title = "Link to room " +  getRoomFromClassName(elem);
+    }        
+  }
+}
+
+
+
+function prepRoom()
+{
+  var v;
+  findForm = document.getElementsByName("vqvak")[0].parentNode;       
+  findForm.vqxfi.value = ""; // Clean up anything that may have been left over
+  
+  
+  editForm = document.getElementsByName("vqxsp")[0];
+  while (editForm.tagName.toLowerCase() !== "form") {
+    editForm = editForm.parentNode;
+  }
+  
+  
+  var def = getCookie(cookieName());
+  
+  v = (!!def) ? def : multiConfig.defaultView;
+  multiConfig.currentView = v;;
+  
+  var r = roomstuff.rooms[v];
+  if (!r) {
+    if (v == multiConfig.defaultView) {
+      window.alert("No view called " + v);
+      return;
+    } else {
+      window.alert("Old view no longer available.");
+      v = multiConfig.defaultView;
+    }
+  }
+  
+  // Show the 'default' screen.
+  prepScreen(v);
+  
+  // Create the form we need to change views.
+  var s = "";
+  var selectedMode = "";
+  roomSelectObj = document.getElementsByName("vqxfi")[0];
+  let rsBgColor = window.getComputedStyle(roomSelectObj).backgroundColor;
+  let rsTextColor = window.getComputedStyle(roomSelectObj).color;
+  let rsBorderColor = window.getComputedStyle(roomSelectObj).borderColor;
+  
+  //s += '<form name="testform">'
+  
+  s += '<select id="roomselect" onChange="roomOrView(this);" style="background-color:'+rsBgColor+';color:'+rsTextColor+';border:1px solid '+rsBorderColor+';">';
+  
+  multiConfig.currentView  
+  
+  var arrayList1 = multiConfig.viewList;
+  for (var i = 0; i < arrayList1.length; i++) {
+    var s1 = arrayList1[i];
+    
+    selectedMode = (s1 === multiConfig.currentView) ? "selected" : "";
+    
+    var o = "<option value='" + s1 + "' " + selectedMode + 
+    " id=" + roomstuff.rooms[s1].roomId + " " + roomstuff.rooms[s1].rDisable + ">" + roomstuff.rooms[s1].rName +
+    "</option>";
+    s += o;
+  }
+  
+  s += "</select>";
+  s += " ";
+  var rName2=roomstuff.rooms[multiConfig.currentView].rName.replace(/\s/g, '');
+  changeButtonObj = document.getElementsByName("vqvaj")[0];
+  let cbBgColor = window.getComputedStyle(changeButtonObj).backgroundColor;
+  let cbTextColor = window.getComputedStyle(changeButtonObj).color;
+  let cbBorderColor = window.getComputedStyle(changeButtonObj).borderColor;  
+  s += '<input type="text" style="display:none;" id="noSpaceRName" value="'+rName2+'"><input type="button" value="Change View" id="changeBtn" style="background-color:'+rsBgColor+';color:'+rsTextColor+';border:1px solid '+rsBorderColor+';">';
+  //s += "</form>";
+  
+  $('roomlist').innerHTML = s;
+  
+  
+  var subbutton = document.getElementsByName("vqvaj")[0];
+  subbutton.onclick = function () {
+    var chatbox = document.getElementsByName("vqxsp")[0];
+	var rName3 = document.getElementById('noSpaceRName').value;
+    if (chatbox.value != "") {
+      var newchat = "<font color='" + multiConfig.locationColor + "' bgcolor=\"" + multiConfig.locationBackground + "\" size=\"-2\" id='"+ roomstuff.rooms[multiConfig.currentView].rName +"' class='"+ rName3 +"' style='opacity:"+roomstuff.rooms[multiConfig.currentView].rOpacity+";'>"
+      + roomstuff.rooms[multiConfig.currentView].rName + "</font><br><span class=\"trueMulti " + rName3 + "\">"      + chatbox.value + "</span>";
+      chatbox.value = newchat;
+    }
+  }
+
+
+isItTrue();
+
+
+}
+
+function roomOrView(finder) {
+
+if (finder[finder.selectedIndex].id === "undefined") {
+document.getElementById('changeBtn').value="Change View";
+document.getElementById('changeBtn').onclick = function() { prepScreen2();isItTrue();changePostLimit(); };
+
+}
+else {
+document.getElementById('changeBtn').value="Change Room";
+document.getElementById('changeBtn').onclick = function() { roomChange() };
+};
+}
+
+function prepScreen2()
+{
+  var selObj = document.getElementById('roomselect');	
+  var selIndex = selObj.selectedIndex;
+  //txtIndexObj.value = selIndex;
+  //txtValueObj.value = selObj.options[selIndex].value;
+  //txtTextObj.value = selObj.options[selIndex].text;
+  
+  var room = selObj.options[selIndex].value;
+  prepScreen(room);
+  
+  setCookie(cookieName(), room);
+
+
+}
+
+
+function prepScreen(room)
+{
+  multiConfig.currentView = room;
+  
+  var r = roomstuff.rooms[room];
+  
+  setDiv("roomtop", r);
+  setDiv("roombottom", r);
+  setDiv("underchat", r);
+  setDiv("chatleft", r)
+
+  var bg = "";
+  var inBG = "";
+  var rDisable = " ";
+  var inHR = "";
+  var borderBG="";
+  var inputBGC="";
+  var inputBGI="";
+  var roomId="";
+  
+  if (!!r.innerHRImage) {
+    inHR = 'url("'+ r.innerHRImage + '")';
+}
+var x = document.getElementsByTagName("HR");
+var i;
+for (i = 0; i < x.length; i++) {
+  x[i].style.backgroundImage = inHR;
+}
+
+  
+// DEFAULT INPUT Border Color
+if (!!r.inputBorderColor_Default) {
+    var inputBC = r.inputBorderColor_Default;
+}
+var ibg = document.getElementsByTagName("INPUT");
+var tbg = document.getElementsByTagName("TEXTAREA");
+var sbg = document.getElementsByTagName("SELECT");
+var obg = document.getElementsByTagName("OPTION");
+var i;
+for (i = 0; i < ibg.length; i++) {
+  ibg[i].style.borderColor = inputBC;
+}
+for (i = 0; i < tbg.length; i++) {
+  tbg[i].style.borderColor = inputBC;
+}
+for (i = 0; i < sbg.length; i++) {
+  sbg[i].style.borderColor = inputBC;
+}
+for (i = 0; i < obg.length; i++) {
+  obg[i].style.borderColor = inputBC;
+}
+
+// DEFAULT INPUT Text Color
+if (!!r.inputTextColor_Default) {
+    var inputTCD = r.inputTextColor_Default;
+}
+var ibg = document.getElementsByTagName("INPUT");
+var tbg = document.getElementsByTagName("TEXTAREA");
+var sbg = document.getElementsByTagName("SELECT");
+var obg = document.getElementsByTagName("OPTION");
+var i;
+for (i = 0; i < ibg.length; i++) {
+  ibg[i].style.color = inputTCD;
+}
+for (i = 0; i < tbg.length; i++) {
+  tbg[i].style.color = inputTCD;
+}
+for (i = 0; i < sbg.length; i++) {
+  sbg[i].style.color = inputTCD;
+}
+for (i = 0; i < obg.length; i++) {
+  obg[i].style.color = inputTCD;
+}
+
+// DEFAULT INPUT Background Color
+if (!!r.inputBGColor_Default) {
+    var inputBGC = r.inputBGColor_Default;
+}
+var ibg = document.getElementsByTagName("INPUT");
+var tbg = document.getElementsByTagName("TEXTAREA");
+var sbg = document.getElementsByTagName("SELECT");
+var obg = document.getElementsByTagName("OPTION");
+var i;
+for (i = 0; i < ibg.length; i++) {
+  ibg[i].style.backgroundColor = inputBGC;
+  ibg[i].style.backgroundImage = " ";
+}
+for (i = 0; i < tbg.length; i++) {
+  tbg[i].style.backgroundColor = inputBGC;
+  tbg[i].style.backgroundImage = " ";
+}
+for (i = 0; i < sbg.length; i++) {
+  sbg[i].style.backgroundColor = inputBGC;
+  sbg[i].style.backgroundImage = " ";
+}
+for (i = 0; i < obg.length; i++) {
+  obg[i].style.backgroundColor = inputBGC;
+  obg[i].style.backgroundImage = " ";
+}
+
+
+// INPUT Background Image
+if (!!r.inputBGImage) {
+  inputBGI = 'url(' + r.inputBGImage + ');';
+}
+var ibg = document.getElementsByTagName("INPUT");
+var tbg = document.getElementsByTagName("TEXTAREA");
+var sbg = document.getElementsByTagName("SELECT");
+var obg = document.getElementsByTagName("OPTION");
+var i;
+for (i = 0; i < ibg.length; i++) {
+  ibg[i].style.backgroundImage = inputBGI;
+}
+for (i = 0; i < tbg.length; i++) {
+  tbg[i].style.backgroundImage = inputBGI;
+}
+for (i = 0; i < sbg.length; i++) {
+  sbg[i].style.backgroundImage = inputBGI;
+}
+for (i = 0; i < obg.length; i++) {
+  obg[i].style.backgroundImage = inputBGI;
+}
+
+
+// BODY Background Image
+if (!!r.backgroundImage) {
+  bg = 'url("' +r.backgroundImage + '")';
+}
+document.body.style.backgroundImage = bg;
+
+
+// TABLE borderBackground Color
+if (!!r.borderBGColor) {
+  borderBG = r.borderBGColor;
+}
+  document.getElementById('borderBackground').style.backgroundColor = borderBG;
+  document.getElementById('borderBackground').style.backgroundImage = " ";
+
+// TABLE borderBackground Image
+if (!!r.borderBGImage) {
+  borderBG = r.borderBGImage;
+}
+  document.getElementById('borderBackground').style.backgroundColor = " ";
+  document.getElementById('borderBackground').style.backgroundImage = "url('" + borderBG + "')";
+
+
+// TABLE innerBackground Color
+  if (!!r.innerBGColor) {
+  inBG = r.innerBGColor;
+}
+  document.getElementById('innerBackground').style.backgroundColor = inBG;
+  document.getElementById('innerBackground').style.backgroundImage = " ";
+
+// TABLE innerBackground Image
+  if (!!r.innerBGImage) {
+    inBG = 'url('+ r.innerBGImage + ')';
+}
+  document.getElementById('innerBackground').style.backgroundImage = inBG;
+
+// BODY Color 
+if(!!r.color) {document.body.style.color = r.color;}
+  
+  if(!!r.link) {
+	function changeLinkColor(){
+	var rLink = document.getElementsByTagName('A'); 
+		function linkColorChange(x) {
+				x.style.color = r.link;
+		} 
+	for (var i = 0; i < rLink.length; i += 1) {linkColorChange(rLink[i]);};
+	}
+	changeLinkColor();
+  }
+
+  if(!!r.hlink) {
+	var hovLink = document.getElementsByTagName('A'); 
+		function attachColorChangers(x) {
+			x.addEventListener('mouseover', function(){
+				x.style.color = r.hlink;
+			});
+			x.addEventListener('mouseout', function(){
+			    x.style.color = r.link;
+			});
+		} 
+	for (var i = 0; i < hovLink.length; i += 1) {attachColorChangers(hovLink[i]);};
+  }
+  
+  if (!!r.fromBGColor) {
+	  fromBoxBGC = r.fromBGColor;
+	  fromBoxFC = r.fromFontColor;
+	  document.getElementsByName("vqxha")[1].style.color = fromBoxFC;
+	  document.getElementsByName("vqxha")[1].style.backgroundColor = fromBoxBGC;
+
+	  }
+
+  if (!!r.toBGColor) {
+	  toBoxBGC = r.toBGColor;
+	  toBoxFC = r.toFontColor;
+	  document.getElementsByName("vqxto")[0].style.color = toBoxFC;
+	  document.getElementsByName("vqxto")[0].style.backgroundColor = toBoxBGC;
+	  }
+
+  if (!!r.spiritListBGColor) {
+	  spiritListBGC = r.spiritListBGColor;
+	  spiritListBoxFC = r.spiritListFontColor;
+	  document.getElementsByName("vqvdy")[0].style.color = spiritListBoxFC;
+	  document.getElementsByName("vqvdy")[0].style.backgroundColor = spiritListBGC;
+	  }
+
+  if (!!r.chatBGColor) {
+	  chatBoxBGC = r.chatBGColor;
+	  chatBoxFC = r.chatFontColor;
+	  document.getElementsByName("vqxsp")[0].style.color = chatBoxFC;
+	  document.getElementsByName("vqxsp")[0].style.backgroundColor = chatBoxBGC;
+	  }
+	  
+  window.location.hash="chatmark";
+}
+
+
+
+
+function $(t) {
+  return document.getElementById(t);
+}
+
+window.onload = prepRoom;
+
+
+
+function getFindForm()
+{
+  for (var i=0; document.forms[i]; i++)
+  {
+    if (typeof(document.forms[i].vqxfi) != 'undefined')
+    {
+      return document.forms[i];
+    }
+  }
+  return false;
+}
+
+function multichangeRoom(){
+  var searchbox = document.getElementById('roomselect');
+  var theTarget = searchbox.options[searchbox.selectedIndex].id;
+  var findform = getFindForm();
+  findform.vqxfi.value = theTarget;
+  findform.submit();
+}
+
+function roomChange(){
+document.getElementById('changeBtn').onClick=multichangeRoom();
+}
+
+//////////////////////////
+
+function cookieName() {
+  var s = editForm.vqxha.value + "_" + editForm.vqxro.value;
+  return s;
+}
+
+function getCookie(NameOfCookie)
+{ if (document.cookie.length > 0) 
+  { begin = document.cookie.indexOf(NameOfCookie+"="); 
+    if (begin != -1) 
+    { begin += NameOfCookie.length+1; 
+      end = document.cookie.indexOf(";", begin);
+      if (end == -1) end = document.cookie.length;
+    return unescape(document.cookie.substring(begin, end)); } 
+  }
+  return null; 
+}
+
+function setCookie(NameOfCookie, value, expiredays) 
+{ var ExpireDate = new Date ();
+  //ExpireDate.setTime(ExpireDate.getTime() + (expiredays * 24 * 3600 * 1000));
+  ExpireDate.setTime(ExpireDate.getTime() + (600)); // 10 Minutes.
+  
+  document.cookie = NameOfCookie + "=" + escape(value) + 
+  ((expiredays == null) ? "" : "; expires=" + ExpireDate.toGMTString());
+}
+
+function delCookie(NameOfCookie) 
+{ if (getCookie(NameOfCookie)) {
+  document.cookie = NameOfCookie + "=" +
+  "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+  }
+  
+}
+
+const addCSS = s => document.head.appendChild(document.createElement("style")).innerHTML=s;
+
+addCSS("option[disabled]{color:#FF0000;}")
+
+//})();
+
+function isItTrue(){
+if (TurnOn_trueMulti==1) {trueMultiLoc();changePostLimit();} else {}
+}
+
+
+function trueMultiLoc(){
+document.getElementById('noSpaceRName').value=roomstuff.rooms[multiConfig.currentView].rName.replace(/\s/g, '');
+
+var roomSel = document.getElementById("noSpaceRName");
+
+var roomSelValue = roomSel.value;
+var roomSelIndex = roomSel.selectedIndex;
+var BlocksToShow = document.getElementsByClassName(roomSelValue);
+var BlocksToShow2 = document.getElementsByClassName(roomSelIndex);
+var BlocksToHide = document.getElementsByClassName("trueMulti");
+var divsToShow = document.getElementsByClassName(roomSelValue);
+var divsToShow2 = document.getElementsByClassName(roomSelIndex);
+var divsToHide = document.getElementsByClassName("trueMulti");
+
+for(var i = 0; i < BlocksToHide.length; i++){
+if (BlocksToHide[i].parentNode.tagName == "BLOCKQUOTE") {
+var blockTable = BlocksToHide[i];
+
+blockTable.parentNode.previousSibling.previousSibling.style.display = "none";
+
+blockTable.parentNode.style.display = "none";
+blockTable.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+blockTable.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+blockTable.parentNode.previousElementSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+blockTable.parentNode.previousSibling.style.display = "none";
+}}
+
+for(var i = 0; i < BlocksToShow.length; i++){
+if (BlocksToShow[i].parentNode.tagName == "BLOCKQUOTE") {
+var blockTable2 = BlocksToShow[i];
+
+blockTable2.parentNode.previousSibling.previousSibling.style.display = "block";
+
+blockTable2.parentNode.style.display = "block";
+blockTable2.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "block";
+blockTable2.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+blockTable2.parentNode.previousElementSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+blockTable2.parentNode.previousSibling.style.display = "inline";
+blockTable.parentNode.previousSibling.previousSibling.style = "display:block;";
+}}
+
+for(var i = 0; i < BlocksToShow2.length; i++){
+if (BlocksToShow2[i].parentNode.tagName == "BLOCKQUOTE") {
+var blockTable3 = BlocksToShow2[i];
+//blockTable3.parentNode.style.display = "block";
+
+blockTable3.parentNode.previousSibling.previousSibling.style.display = "block";
+
+blockTable3.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "block";
+blockTable3.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+blockTable3.parentNode.previousElementSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+blockTable3.parentNode.previousSibling.style.display = "inline";
+
+
+
+}}
+
+
+	
+for(var i = 0; i < divsToHide.length; i++){
+if (divsToHide[i].parentNode.tagName == "TD") {
+var charTable = divsToHide[i].parentNode.parentNode.parentNode.parentNode;
+
+charTable.nextSibling.style.display = "none";
+
+divsToHide[i].style.display = "none";
+charTable.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+charTable.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+charTable.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "none";
+charTable.previousSibling.previousSibling.previousSibling.style.display = "none";
+charTable.previousSibling.previousSibling.style.display = "none";
+charTable.style.display = "none";
+}}
+
+for(var i = 0; i < divsToShow.length; i++){
+if (divsToShow[i].parentNode.tagName == "TD") {
+var charTable2 = divsToShow[i].parentNode.parentNode.parentNode.parentNode;
+divsToShow[i].style.display = "inline";
+charTable2.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "block";
+charTable2.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable2.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable2.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable2.previousSibling.previousSibling.style.display = "inline";
+charTable2.style.display = "table";
+}}
+
+for(var i = 0; i < divsToShow2.length; i++){
+if (divsToShow2[i].parentNode.tagName == "TD") {
+var charTable3 = divsToShow2[i].parentNode.parentNode.parentNode.parentNode;
+divsToShow2[i].style.display = "inline";
+charTable3.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "block";
+charTable3.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable3.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable3.previousSibling.previousSibling.previousSibling.style.display = "inline";
+charTable3.previousSibling.previousSibling.style.display = "inline";
+charTable3.style.display = "table";
+}}
+
+}
+
+function changePostLimit() {
+document.getElementById("chipostlimit").value="1000";
+document.getElementsByName("vqxby")[0].value="1000";
+}
