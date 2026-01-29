@@ -19,71 +19,7 @@ var roomstuff = {
 <style>
 body {color: #e8d8b0; font-family: 'Cormorant Garamond', serif;}
 
-/* SCROLL STYLES FOR ALL ROOMS */
-.ivoryScroll {
-    display: inline-block;
-    padding: 20px 30px;
-    background: rgba(255, 245, 225, 0.08);
-    border-left: 2px solid rgba(255, 245, 225, 0.35);
-    border-right: 2px solid rgba(255, 245, 225, 0.35);
-    border-radius: 4px;
-}
 
-.silkScroll {
-    display: inline-block;
-    padding: 22px 32px;
-    background: rgba(255, 240, 200, 0.06);
-    border-left: 2px solid rgba(255, 230, 180, 0.3);
-    border-right: 2px solid rgba(255, 230, 180, 0.3);
-    border-radius: 4px;
-}
-
-.petalScroll {
-    display: inline-block;
-    padding: 22px 34px;
-    background: rgba(255, 220, 230, 0.08);
-    border-top: 2px solid rgba(255, 200, 210, 0.35);
-    border-bottom: 2px solid rgba(255, 200, 210, 0.35);
-    border-radius: 6px;
-}
-
-.moonScroll {
-    display: inline-block;
-    padding: 25px 36px;
-    background: rgba(200, 210, 255, 0.07);
-    border: 1px solid rgba(200, 210, 255, 0.25);
-    border-radius: 6px;
-    box-shadow: 0 0 12px rgba(200, 210, 255, 0.18);
-}
-
-.kimonoScroll {
-    display: inline-block;
-    padding: 28px 40px;
-    background: rgba(80, 0, 0, 0.25);
-    border-top: 3px solid rgba(255, 200, 180, 0.4);
-    border-bottom: 3px solid rgba(255, 200, 180, 0.4);
-    border-radius: 2px;
-    letter-spacing: 0.5px;
-}
-
-.teaScroll {
-    display: inline-block;
-    padding: 24px 38px;
-    background: rgba(240, 225, 200, 0.08);
-    border-left: 2px solid rgba(240, 225, 200, 0.35);
-    border-right: 2px solid rgba(240, 225, 200, 0.35);
-    border-radius: 4px;
-}
-
-.mirrorScroll {
-    display: inline-block;
-    padding: 26px 36px;
-    background: rgba(255, 245, 240, 0.07);
-    border: 1px solid rgba(255, 235, 225, 0.3);
-    border-radius: 6px;
-    box-shadow: 0 0 10px rgba(255, 235, 225, 0.15);
-}
-</style>
 
 <center>
 <img class='topImage' src='https://soi-ivorytea.hyperchat.com/TearoomtopUSE.png'><br>
