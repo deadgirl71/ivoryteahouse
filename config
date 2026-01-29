@@ -1,14 +1,19 @@
-var multiConfig = {"THISROOM":"cen@soi","locationColor":"red","locationBackground":"green","currentView":"",""viewList": [
-  "ivorytea",
-  "silkhall",
-  "petalgarden",
-  "moonbath",
-  "redkimono",
-  "teaceremony",
-  "mirrorroom"
-],
-"defaultView": "ivorytea"
-
+var multiConfig = {
+  "THISROOM": "cen@soi",
+  "locationColor": "red",
+  "locationBackground": "green",
+  "currentView": "",
+  "viewList": [
+    "ivorytea",
+    "silkhall",
+    "petalgarden",
+    "moonbath",
+    "redkimono",
+    "teaceremony",
+    "mirrorroom"
+  ],
+  "defaultView": "ivorytea"
+};
 
 var roomstuff = {"rooms":{
 
